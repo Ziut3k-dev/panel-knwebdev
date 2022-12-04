@@ -9,7 +9,20 @@ jobs:
       - uses: actions/checkout@master
       - uses: getsentry/action-git-diff-suggestions@v1
   Build-app:
+    needs: diif-suggestions
     runs-on: webdev
     steps:
     - uses: actions/checkout@master
-    - run: yarn install && yarn build
+    - run: yarn install
+    - run: yarn build
+  Deploy-break:
+    needs: Build-app
+    runs-on: webdev
+    steps:
+    - run: echo "Deploying and enabling break mode" 
+  Link-build:
+    runs-on: webdev
+    needs: Build-app
+    steps:
+    - run: rm -r /var/www/panel_webdev/*
+    - run: cp -r build/* /var/www/panel_webdev
