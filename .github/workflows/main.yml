@@ -12,10 +12,5 @@ jobs:
     runs-on: webdev
     steps:
     - uses: actions/checkout@master
-    - name: Delopy files
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16
-        cache: 'yarn'
     - run: yarn install
     - run: yarn build
