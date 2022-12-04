@@ -22,7 +22,7 @@ jobs:
     - run: echo "Deploying and enabling break mode" 
   Link-build:
     runs-on: webdev
-    needs: Build-app
+    needs: Deploy-break
     steps:
     - run: rm -r /var/www/panel_webdev/*
     - run: cp -r build/* /var/www/panel_webdev
