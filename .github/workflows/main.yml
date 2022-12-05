@@ -8,14 +8,21 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: getsentry/action-git-diff-suggestions@v1
-  Copy-Repo-Files:
+  Build-app:
+    needs: diif-suggestions
     runs-on: webdev
     steps:
     - uses: actions/checkout@master
-    - name: Delopy files
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16
-        cache: 'yarn'
     - run: yarn install
     - run: yarn build
+  Deploy-break:
+    needs: Build-app
+    runs-on: webdev
+    steps:
+    - run: echo "Deploying and enabling break mode" 
+  Link-build:
+    runs-on: webdev
+    needs: Deploy-break
+    steps:
+    - run: rm -r /var/www/panel_webdev/*
+    - run: cp -r build/* /var/www/panel_webdev
